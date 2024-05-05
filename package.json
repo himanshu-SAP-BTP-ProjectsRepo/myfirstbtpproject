@@ -1,0 +1,50 @@
+{
+    "name": "escalationmanagement",
+    "version": "1.0.0",
+    "description": "A simple CAP project.",
+    "repository": "<Add your repository here>",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap/cds": "^7",
+        "@sap/cds-hana": "^2",
+        "@sap/xssec": "^3",
+        "express": "^4",
+        "passport": "^0.7.0"
+    },
+    "devDependencies": {
+        "@cap-js/sqlite": "^1",
+        "@sap/cds-dk": "^7.9.1",
+        "@sap/ux-specification": "^1.120.9",
+        "axios": "^1.6.8",
+        "chai": "^4.4.1",
+        "chai-as-promised": "^7.1.1",
+        "chai-subset": "^1.6.0",
+        "jest": "^29.7.0",
+        "rimraf": "^3.0.2"
+    },
+    "scripts": {
+        "start": "cds-serve",
+        "watch-frontend": "cds watch --open frontend/webapp/index.html?sap-ui-xx-viewCache=false",
+        "undeploy": "cf undeploy escalationmanagement --delete-services --delete-service-keys --delete-service-brokers",
+        "build": "rimraf resources mta_archives && mbt build --mtar archive",
+        "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+        "test": "npx jest"
+    },
+    "cds": {
+        "requires": {
+            "db": "hana",
+            "auth": {
+                "[production]": {
+                    "kind": "dummy-auth"
+                },
+                "[development]": {
+                    "kind": "dummy-auth"
+                }
+            }
+        }
+    },
+    "sapux": [
+        "app/frontend"
+    ]
+}
